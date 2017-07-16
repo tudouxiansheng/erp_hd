@@ -31,5 +31,25 @@
 		<property name="prefix" value="/WEB-INF/console/"/>
 		<property name="suffix" value=".jsp"/>
 	</bean>
+	
+	
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login" />
+		<property name="successUrl" value="/" />
+		<property name="unauthorizedUrl" value="/" />
+		<property name="filterChainDefinitions">
+			<value>
+				/home* = anon
+				/ = anon
+				/logout = logout
+				/role/** = roles[admin]
+				/permission/** = perms[permssion:look]
+				/** = authc
+			</value>
+		</property>
+	</bean>
+
+	
 	 <import resource="config/*.xml"/>		
 </beans>
